@@ -98,18 +98,11 @@ def parse_actions(data, folder):
         # Checks for possible clock in or out
         if action['type'] == 'updateCard':
 
-            # Determines if the state change was done by the card owner
+            # Determines if the state change happened and to which list
             if 'listAfter' in action['data']:
-                if action['data']['listAfter']['name'] == 'Year 2 (Active)':
+                if '(Active)' in action['data']['listAfter']['name']:
                     clockIn.append(action)
-                elif action['data']['listAfter']['name'] == 'Year 2 (!Active)':
-                    clockOut.append(action)
-
-            # Determines if the state change was done by someone else
-            elif 'list' in action['data']:
-                if action['data']['list']['name'] == 'Year 2 (Active)':
-                    clockIn.append(action)
-                elif action['data']['list']['name'] == 'Year 2 (!Active)':
+                elif '(!Active)' in action['data']['listAfter']['name']:
                     clockOut.append(action)
 
         # Checks for a possible comment
